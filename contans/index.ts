@@ -1,1 +1,1 @@
-export const API = 'http://35.89.119.204:8068';
+export const API = 'https://ursai.xyz';
