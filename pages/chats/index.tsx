@@ -198,9 +198,12 @@ export default function Chats() {
                     return (
                       <div className="flex">
                         <div
-                          className="ml-[4.75rem] mt-2 bg-[#E4E4E41A] text-[#808191] text-sm font-normal px-6 py-4"
+                          className="ml-[4.75rem] mt-2 text-sm font-normal px-6 py-4"
                           style={{
                             borderRadius: "4px 20px 20px 20px",
+                            background:
+                              item.type === "me" ? "#E4E4E41A" : "#25D4D0",
+                            color: item.type === "me" ? "#808191" : "#fff",
                           }}
                         >
                           {item.message}
