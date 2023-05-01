@@ -33,7 +33,7 @@ export default function Home() {
   return (
     <Layout>
       <div className="p-16 flex flex-wrap">
-        {characterList.map((item, index) => (
+        {characterList.map((item: any, index: any) => (
           <div
             className="bg-[#242731] px-5 h-[23.375rem] w-[15rem] rounded-3xl py-6 ml-4 mb-8"
             onClick={() => {

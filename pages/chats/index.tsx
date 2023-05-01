@@ -90,7 +90,7 @@ export default function Chats() {
           }}
         >
           <div className="px-5 max-h-screen overflow-auto">
-            {characterList.map((item, index) => (
+            {characterList.map((item: any, index) => (
               <div
                 className="flex px-5 h-20 items-center w-[21rem] cursor-default hover:bg-[#20454a] rounded-xl"
                 style={{
@@ -137,12 +137,13 @@ export default function Chats() {
               <div className="font-semibold text-[2.5rem] text-white">
                 {
                   characterList.find(
-                    (item) => Number(item.characterId) === Number(characterId)
+                    (item: any) =>
+                      Number(item.characterId) === Number(characterId)
                   )?.name
                 }
               </div>
               <div className="py-6 flex-1 overflow-auto">
-                {result.map((item, index) => {
+                {result.map((item: any, index: any) => {
                   if (item.info) {
                     return (
                       <div
@@ -157,7 +158,7 @@ export default function Chats() {
                               item.type === "me"
                                 ? "/img/mini-avatar.svg"
                                 : characterList.find(
-                                    (item) =>
+                                    (item: any) =>
                                       Number(item.characterId) ===
                                       Number(characterId)
                                   )?.portraitUrl
@@ -172,7 +173,7 @@ export default function Chats() {
                               {item.type === "me"
                                 ? `${userInfo.firstName} ${userInfo.lastName}`
                                 : characterList.find(
-                                    (item) =>
+                                    (item: any) =>
                                       Number(item.characterId) ===
                                       Number(characterId)
                                   )?.name}

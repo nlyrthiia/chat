@@ -12,7 +12,7 @@ export default function Layout({ ...props }) {
         <div>
           <img src="/img/logo.svg" alt="logo" className="" />
         </div>
-        {nav.map((item, index) => (
+        {nav.map((item: any, index: any) => (
           // rome-ignore lint/suspicious/noArrayIndexKey: <explanation>
           <div
             className="mt-7 w-full px-5 h-14 flex items-center cursor-default rounded-2xl"
