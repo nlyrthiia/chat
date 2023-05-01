@@ -1,4 +1,6 @@
+import axios from "axios";
 import { useRouter } from "next/router";
+import { useEffect } from "react";
 
 export default function Layout({ ...props }) {
   const nav = ["Home", "Chats", "Create"];
@@ -21,7 +23,12 @@ export default function Layout({ ...props }) {
                   ? "#25D4D0"
                   : "transparent",
             }}
-            onClick={() => router.push(`/${item.toLocaleLowerCase()}`)}
+            onClick={() => {
+              if (item === "Create") {
+              } else {
+                router.push(`/${item.toLocaleLowerCase()}`);
+              }
+            }}
           >
             <div>
               <img
