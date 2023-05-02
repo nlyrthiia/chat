@@ -3,16 +3,18 @@ import { API } from "@/contans";
 import { characterDTOList } from "@/mock";
 import axios from "axios";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export default function Chats() {
-  // 获取query参数
   const router = useRouter();
   const { character } = router.query;
   const [characterList, setCharacterList] = useState([]);
   const [characterId, setCharacterId] = useState(character);
   const [message, setMessage] = useState("");
   const [userInfo, setUserInfo] = useState<any>({});
+  const tags = ["ALL", "MY"];
+  const [tag, setTag] = useState(0);
+  const scrollRef = useRef<any>(null);
 
   const getTime = (lastChatTime: any) => {
     const time = new Date().getTime() - lastChatTime;
@@ -36,7 +38,7 @@ export default function Chats() {
 
   const [result, setResult] = useState<any>([]);
 
-  useEffect(() => {
+  const getChats = () => {
     const token = window.localStorage.getItem("token");
     const accountId: any = window.localStorage.getItem("accountId");
     const email: any = window.localStorage.getItem("email");
@@ -44,7 +46,9 @@ export default function Chats() {
       axios
         .post(
           `${API}/urs/character/listCharacters`,
-          { accountId },
+          {
+            accountId: tag === 0 ? null : accountId,
+          },
           {
             headers: {
               Authorization: token,
@@ -74,7 +78,16 @@ export default function Chats() {
           }
         });
     }
+  };
+
+  useEffect(() => {
+    getChats();
   }, []);
+
+  useEffect(() => {
+    setResult([]);
+  }, [characterId]);
+
   return (
     <Layout>
       <div
@@ -89,7 +102,22 @@ export default function Chats() {
             maxHeight: "calc(100vh - 7rem)",
           }}
         >
-          <div className="px-5 max-h-screen overflow-auto">
+          <div className="px-5 max-h-screen overflow-y-auto overflow-x-hidden">
+            <div className="flex mb-4 mt-2">
+              {tags.map((item, index) => (
+                <div
+                  onClick={() => setTag(index)}
+                  className="h-14 rounded-xl cursor-pointer flex mr-4 px-7 outline-none justify-center items-center text-sm font-semibold"
+                  style={{
+                    background: index === tag ? "#25D4D0" : "#203339",
+                    color: index === tag ? "#fff" : "#808191",
+                    width: index === 1 ? "8.75rem" : "auto",
+                  }}
+                >
+                  {item}
+                </div>
+              ))}
+            </div>
             {characterList.map((item: any, index) => (
               <div
                 className="flex px-5 h-20 items-center w-[21rem] cursor-default hover:bg-[#20454a] rounded-xl"
@@ -98,6 +126,12 @@ export default function Chats() {
                     Number(characterId) === Number(item.characterId)
                       ? "#20454a"
                       : "",
+                  display:
+                    tag === 0
+                      ? "flex"
+                      : item.creatorAccountId === userInfo.accountId
+                      ? "flex"
+                      : "none",
                 }}
                 onClick={() => setCharacterId(item.characterId)}
               >
@@ -142,7 +176,7 @@ export default function Chats() {
                   )?.name
                 }
               </div>
-              <div className="py-6 flex-1 overflow-auto">
+              <div className="py-6 flex-1 overflow-auto" ref={scrollRef}>
                 {result.map((item: any, index: any) => {
                   if (item.info) {
                     return (
@@ -297,9 +331,18 @@ export default function Chats() {
                               }
                             });
                           }
+                        })
+                        .finally(() => {
+                          scrollRef.current?.scrollTo({
+                            top: scrollRef.current.scrollHeight,
+                          });
                         });
 
                       setMessage("");
+
+                      scrollRef.current?.scrollTo({
+                        top: scrollRef.current.scrollHeight,
+                      });
                     }
                   }}
                   className="w-full px-6 h-10 bg-transparent border border-[#808191] outline-none rounded-2xl text-sm font-normal placeholder:#808191 text-white"
