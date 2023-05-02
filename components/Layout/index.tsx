@@ -411,7 +411,7 @@ export default function Layout({ ...props }) {
                           .post(
                             `${API}/urs/character/savePortrait`,
                             {
-                              data: formData,
+                              multipartFile: file,
                             },
                             {
                               headers: {
@@ -421,7 +421,9 @@ export default function Layout({ ...props }) {
                             }
                           )
                           .then((res) => {
-                            console.log(res, "??");
+                            if (res.data.code === 0) {
+                              setAvatar(res.data.data.picUrl);
+                            }
                           });
 
                         e.target.value = "";
@@ -477,7 +479,18 @@ export default function Layout({ ...props }) {
                             }
                           )
                           .then((res) => {
-                            console.log(res, "??");
+                            if (res.data.code === 0) {
+                              toast.success(res.data.message);
+                              setToastShow(false);
+
+                              setTimeout(() => {
+                                if (router.pathname !== "/home") {
+                                  router.push("/home");
+                                } else {
+                                  router.reload();
+                                }
+                              }, 1000);
+                            }
                           });
                       }}
                       className="h-14 text-white rounded-2xl px-11 cursor-pointer bg-[#25D4D0] flex justify-center items-center ml-8"

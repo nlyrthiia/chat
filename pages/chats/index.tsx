@@ -15,6 +15,7 @@ export default function Chats() {
   const tags = ["ALL", "MY"];
   const [tag, setTag] = useState(0);
   const scrollRef = useRef<any>(null);
+  const [entering, setEntering] = useState(false);
 
   const getTime = (lastChatTime: any) => {
     const time = new Date().getTime() - lastChatTime;
@@ -143,6 +144,7 @@ export default function Chats() {
                         : "/img/mini-avatar.svg"
                     }
                     alt="avatar"
+                    className="w-12 h-12 rounded-full overflow-hidden"
                   />
                 </div>
                 <div className="flex flex-col ml-4">
@@ -186,22 +188,20 @@ export default function Chats() {
                           marginTop: result.length ? "1.5rem" : "",
                         }}
                       >
-                        <div className="w-14 h-14 rounded-full">
-                          <img
-                            src={
-                              item.type === "me"
-                                ? "/img/mini-avatar.svg"
-                                : characterList.find(
-                                    (item: any) =>
-                                      Number(item.characterId) ===
-                                      Number(characterId)
-                                  )?.portraitUrl
-                            }
-                            className="w-full h-full"
-                            alt="avatar"
-                          />
-                        </div>
-                        <div className="ml-5">
+                        <img
+                          src={
+                            item.type === "me"
+                              ? "/img/mini-avatar.svg"
+                              : characterList.find(
+                                  (item: any) =>
+                                    Number(item.characterId) ===
+                                    Number(characterId)
+                                )?.portraitUrl
+                          }
+                          className="w-14 h-14 rounded-full overflow-hidden"
+                          alt="avatar"
+                        />
+                        <div className="ml-5 flex-1 mr-36">
                           <div className="flex">
                             <span className="text-white text-xs font-medium">
                               {item.type === "me"
@@ -221,6 +221,9 @@ export default function Chats() {
                             style={{
                               borderRadius: "20px 20px 20px 4px",
                               lineHeight: "1.5rem",
+                              color: item.type === "me" ? "#808191" : "#fff",
+                              background:
+                                item.type === "me" ? "#E4E4E41A" : "#25D4D0",
                             }}
                           >
                             {item.message}
@@ -247,6 +250,11 @@ export default function Chats() {
                   }
                 })}
               </div>
+              {entering && (
+                <div className="my-6 flex justify-center bg-[#33343b] h-14 px-11 rounded-2xl text-white font-bold text-sm w-[9.1rem] items-center mx-auto cursor-default">
+                  Entering
+                </div>
+              )}
               <div className="py-6 px-16">
                 <input
                   value={message}
@@ -277,6 +285,8 @@ export default function Chats() {
                           return [...result, newChat];
                         }
                       });
+
+                      setEntering(true);
 
                       axios
                         .post(
@@ -336,6 +346,7 @@ export default function Chats() {
                           scrollRef.current?.scrollTo({
                             top: scrollRef.current.scrollHeight,
                           });
+                          setEntering(false);
                         });
 
                       setMessage("");

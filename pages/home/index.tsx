@@ -82,8 +82,9 @@ export default function Home() {
                 router.push(`/chats?character=${item.characterId}`);
               }}
             >
-              <div>
+              <div className="w-[12.5rem] h-[12.5rem] rounded-full overflow-hidden">
                 <img
+                  className="w-full h-full"
                   src={
                     item.portraitUrl
                       ? item.portraitUrl
@@ -107,6 +108,7 @@ export default function Home() {
                   src={
                     item.portraitUrl ? item.portraitUrl : "/img/mini-avatar.svg"
                   }
+                  className="w-6 h-6 rounded-full overflow-hidden"
                   alt="avatar"
                 />
                 <div className="ml-3 text-[#808191] font-medium text-xs">
