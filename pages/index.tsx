@@ -47,9 +47,7 @@ export default function Home() {
               Create an account
             </span>
           </div>
-          <div className="mt-11 text-[#808191] text-xs font-medium">
-            Usename or email
-          </div>
+          <div className="mt-11 text-[#808191] text-xs font-medium">Email</div>
           <input
             type="text"
             className="input w-full  mt-4 bg-[#2e303a] text-white text-sm font-semibold"

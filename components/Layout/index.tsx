@@ -1,6 +1,32 @@
+import { API } from "@/contans";
 import axios from "axios";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { Toaster, ToastIcon, toast, resolveValue } from "react-hot-toast";
+import { Transition } from "@headlessui/react";
+
+const TailwindToaster = () => {
+  return (
+    <Toaster>
+      {(t) => (
+        <Transition
+          appear
+          show={t.visible}
+          className="transform p-4 flex bg-white rounded shadow-lg"
+          enter="transition-all duration-150"
+          enterFrom="opacity-0 scale-50"
+          enterTo="opacity-100 scale-100"
+          leave="transition-all duration-150"
+          leaveFrom="opacity-100 scale-100"
+          leaveTo="opacity-0 scale-75"
+        >
+          <ToastIcon toast={t} />
+          <p className="px-2">{resolveValue(t.message, null)}</p>
+        </Transition>
+      )}
+    </Toaster>
+  );
+};
 
 export default function Layout({ ...props }) {
   const nav = ["Home", "Chats", "Create"];
@@ -8,7 +34,7 @@ export default function Layout({ ...props }) {
   const [toastShow, setToastShow] = useState(false);
   const [toastTitle, setToastTitle] = useState("");
   const [toastTag, setToastTag] = useState(0);
-  const [toastStep, setToastStep] = useState(0);
+  const [toastStep, setToastStep] = useState(1);
   const [soul, setSoul] = useState("");
   const [customPrompt, setCustomPrompt] = useState("");
   const [templateList, setTemplateList] = useState([]);
@@ -19,10 +45,69 @@ export default function Layout({ ...props }) {
   const [avatar, setAvatar] = useState("");
   const [tagName, setTagName] = useState("");
   const [search, setSearch] = useState(router.query.search);
+  const [showSelect, setShowSelect] = useState(false);
+  const [selectTemplate, setSelectTemplate] = useState(null);
+  const [emotion, setEmotion] = useState("");
+  const [showAvatar, setShowAvatar] = useState("");
+  const uploadRef = useRef(null);
 
   useEffect(() => {
     setSearch(router.query.search);
   }, [router.query.search]);
+
+  useEffect(() => {
+    const token = window.localStorage.getItem("token");
+
+    axios
+      .post(
+        `${API}/urs/character/listTemplate`,
+        {},
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      )
+      .then((res) => {
+        if (res.data.code === 0) {
+          // setTemplateList(res.data.data.templateDTOList);
+          setTemplateList([
+            {
+              content: "this is a template content",
+              createTime: 1682215908,
+              creatorAccountId: 123456789,
+              description: "this is a template description",
+              modifyTime: 1682215908,
+              templateId: 123456789,
+            },
+            {
+              content: "this is a template content",
+              createTime: 1682215908,
+              creatorAccountId: 123456789,
+              description: "this is a template description",
+              modifyTime: 1682215908,
+              templateId: 123456789,
+            },
+            {
+              content: "this is a template content",
+              createTime: 1682215908,
+              creatorAccountId: 123456789,
+              description: "this is a template description",
+              modifyTime: 1682215908,
+              templateId: 123456789,
+            },
+            {
+              content: "this is a template content",
+              createTime: 1682215908,
+              creatorAccountId: 123456789,
+              description: "this is a template description",
+              modifyTime: 1682215908,
+              templateId: 123456789,
+            },
+          ]);
+        }
+      });
+  }, []);
 
   return (
     <div className="w-full relative h-full flex bg-[#1f2128] min-h-screen">
@@ -137,7 +222,9 @@ export default function Layout({ ...props }) {
             <div className="absolute top-1/2 w-[35rem] px-8 py-12 bg-[#242731] rounded-3xl left-1/2 -translate-x-1/2 -translate-y-1/2">
               <div className="flex items-center justify-between">
                 <span className="font-bold text-lg text-white">
-                  Define Silicon-based Soul
+                  {toastStep < 2
+                    ? "Define Silicon-based Soul"
+                    : "Ready to arrive!"}
                 </span>
                 <img
                   src="/img/close.svg"
@@ -146,8 +233,10 @@ export default function Layout({ ...props }) {
                   onClick={() => setToastShow(false)}
                 />
               </div>
-              <div className="mt-6 flex">
-                <div
+              {toastStep <= 2 ? (
+                <div>
+                  <div className="mt-6 flex">
+                    {/* <div
                   className="h-9 px-5 cursor-default rounded-lg text-white text-sm font-semibold flex items-center justify-center"
                   style={{
                     background: toastStep === 0 ? "#25D4D0" : "transparent",
@@ -155,18 +244,24 @@ export default function Layout({ ...props }) {
                   }}
                 >
                   Custom
-                </div>
-                <div
-                  className="ml-2 h-9 cursor-default px-5 rounded-lg text-sm font-semibold flex justify-center items-center"
-                  style={{
-                    background: toastStep === 1 ? "#25D4D0" : "transparent",
-                    color: toastStep === 1 ? "#fff" : "#808191",
-                  }}
-                >
-                  Template
-                </div>
-              </div>
-              <input
+                </div> */}
+                    <div
+                      className="ml-2 h-9 cursor-default px-5 rounded-lg text-sm font-semibold flex justify-center items-center"
+                      style={{
+                        background:
+                          toastStep === 1 || toastStep === 2
+                            ? "#25D4D0"
+                            : "transparent",
+                        color:
+                          toastStep === 1 || toastStep === 2
+                            ? "#fff"
+                            : "#808191",
+                      }}
+                    >
+                      Template
+                    </div>
+                  </div>
+                  {/* <input
                 className="mt-4 outline-none w-full rounded-lg bg-[#2e303a] border border-[#E4E4E41A] px-6 h-14 py-4 text-white placeholder:text-[#808191] text-sm font-semibold"
                 value={soul}
                 placeholder="What kind of soul are you creating？"
@@ -178,19 +273,225 @@ export default function Layout({ ...props }) {
               <textarea
                 className="mt-4 px-6 h-[16rem] bg-[#373a43] py-4 outline-none border border-[#E4E4E41A] rounded-lg w-full resize-none text-sm font-medium placeholder:text-[#808191] text-white"
                 placeholder="Describe the soul as you wich, in detail."
-              />
-              <div
-                onClick={() => {
-                  setToastStep(1);
-                }}
-                className="mt-8 h-14 bg-[#808191] rounded-2xl cursor-pointer text-white text-sm font-bold w-[9.5rem] flex justify-center items-center"
-              >
-                Next step
-              </div>
+              /> */}
+                  {toastStep === 1 ? (
+                    <div>
+                      <div
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setShowSelect(!showSelect);
+                        }}
+                        className="bg-[#232630] relative rounded-lg outline-none mt-4 w-full h-14 px-6 py-4 flex items-center justify-between"
+                      >
+                        <div className="text-[#808191] text-sm font-semibold">
+                          {selectTemplate ? (
+                            <span className="text-white">
+                              {templateList[selectTemplate].content}
+                            </span>
+                          ) : (
+                            "Choose a kind of soul..."
+                          )}
+                        </div>
+                        <img src="/img/down.svg" alt="down" />
+                        {showSelect ? (
+                          <div className="absolute rounded-lg px-6  bg-[#242731] left-0 right-0 top-0 bottom-0">
+                            {templateList.length ? (
+                              templateList.map((item: any, index) => (
+                                <div
+                                  onClick={() => {
+                                    setSelectTemplate(index);
+                                    setShowSelect(false);
+                                    setToastStep(2);
+                                  }}
+                                  className="text-white cursor-default text-sm font-semibold h-14 bg-[#242731] flex justify-between items-center rounded-lg"
+                                >
+                                  {item.content}
+                                  {index === 0 && (
+                                    <img src="/img/down.svg" alt="down" />
+                                  )}
+                                </div>
+                              ))
+                            ) : (
+                              <div className="absolute left-0 right-0 top-0 rounded-lg bg-[#242731]">
+                                <div className="text-white text-sm font-semibold h-14 bg-[#242731] flex justify-between items-center rounded-lg">
+                                  No template
+                                  <img src="/img/down.svg" alt="down" />
+                                </div>
+                              </div>
+                            )}
+                          </div>
+                        ) : null}
+                      </div>
+                      <div className="mt-20 flex justify-center">
+                        <img src="/img/box.svg" alt="box" />
+                      </div>
+                      <div className="mt-10 text-[#808191] text-sm font-medium flex justify-center">
+                        Choose a kind, then you can fulfill it
+                      </div>
+                    </div>
+                  ) : null}
+                  {toastStep === 2 ? (
+                    <div>
+                      <div className="mt-4 cursor-default outline-none w-full rounded-lg bg-[#2e303a] border border-[#E4E4E41A] px-6 h-14 py-4 text-white placeholder:text-[#808191] text-sm font-semibold">
+                        {templateList[selectTemplate].content}
+                      </div>
+                      <div className="text-[#808191] mt-8 text-xs font-medium">
+                        Story
+                      </div>
+                      <div className="mt-4 px-6 cursor-default h-[6rem] bg-[#373a43] py-4 outline-none border border-[#E4E4E41A] rounded-lg w-full resize-none text-sm font-medium placeholder:text-[#808191] text-white">
+                        {templateList[selectTemplate].description}
+                      </div>
+                      <div className="text-[#808191] mt-8 text-xs font-medium">
+                        Emotion
+                      </div>
+                      <textarea
+                        className="mt-4 px-6 h-[6rem] bg-[#373a43] py-4 outline-none border border-[#E4E4E41A] rounded-lg w-full resize-none text-sm font-medium placeholder:text-[#808191] text-white"
+                        value={emotion}
+                        onChange={(e) => setEmotion(e.target.value)}
+                      />
+                    </div>
+                  ) : null}
+                  <div
+                    onClick={() => {
+                      setToastStep((toastStep) => toastStep + 1);
+                    }}
+                    className="h-14 mt-14 rounded-2xl cursor-pointer text-white text-sm font-bold w-[9.5rem] flex justify-center items-center"
+                    style={{
+                      background: toastStep === 1 ? "#808191" : "#25D4D0",
+                    }}
+                  >
+                    Next step
+                  </div>
+                </div>
+              ) : (
+                <div>
+                  <div className="text-[#808191] mt-8 text-xs font-medium">
+                    Its Name
+                  </div>
+                  <input
+                    className="mt-4 w-[17.1rem] outline-none  rounded-lg bg-[#2e303a] border border-[#E4E4E41A] px-6 h-14 py-4 text-white placeholder:text-[#808191] text-sm font-semibold"
+                    value={name}
+                    placeholder="How would you call it？"
+                    onChange={(e) => setName(e.target.value)}
+                  />
+                  <div className="text-[#808191] mt-8 text-xs font-medium">
+                    Character Avatar
+                  </div>
+                  <div className="flex mt-4 items-center">
+                    <div className="w-20 h-20 overflow-hidden rounded-full">
+                      <img
+                        className="w-full h-full"
+                        src={showAvatar ? showAvatar : "/img/upload-avatar.svg"}
+                        alt="upload-avatar"
+                      />
+                    </div>
+                    <div
+                      onClick={() => {
+                        uploadRef.current?.click();
+                      }}
+                      className="h-14 text-white cursor-pointer rounded-2xl px-11 bg-[#25D4D0] flex justify-center items-center ml-6"
+                    >
+                      Upload New
+                    </div>
+                    <input
+                      onChange={(e) => {
+                        const file = e.target.files[0];
+                        if (file) {
+                          const reader = new FileReader();
+                          reader.readAsDataURL(file);
+                          reader.onload = function () {
+                            setShowAvatar(reader.result as string);
+                          };
+                        }
+
+                        const formData = new FormData();
+                        formData.append("multipartFile", file);
+                        const token = window.localStorage.getItem("token");
+                        axios
+                          .post(
+                            `${API}/urs/character/savePortrait`,
+                            {
+                              data: formData,
+                            },
+                            {
+                              headers: {
+                                "Content-Type": "multipart/form-data",
+                                Authorization: token,
+                              },
+                            }
+                          )
+                          .then((res) => {
+                            console.log(res, "??");
+                          });
+
+                        e.target.value = "";
+                      }}
+                      type="file"
+                      ref={uploadRef}
+                      className="hidden"
+                    />
+                    <div className="h-14 text-white rounded-2xl px-11 bg-[#373a43] flex justify-center items-center ml-3">
+                      Generate
+                    </div>
+                  </div>
+                  <div className="text-[#808191] mt-12 text-xs font-medium">
+                    tag Name
+                  </div>
+                  <input
+                    className="mt-4 w-[17.1rem] outline-none w-full rounded-lg bg-[#2e303a] border border-[#E4E4E41A] px-6 h-14 py-4 text-white placeholder:text-[#808191] text-sm font-semibold"
+                    value={tagName}
+                    placeholder="Its Tag"
+                    onChange={(e) => setTagName(e.target.value)}
+                  />
+                  <div className="mt-8 flex">
+                    <div
+                      onClick={() => {
+                        setToastStep((toastStep) => toastStep - 1);
+                      }}
+                      className="h-14 text-white border border-[#808191] cursor-pointer rounded-2xl px-11 bg-transparent flex justify-center items-center"
+                    >
+                      Back
+                    </div>
+                    <div
+                      onClick={() => {
+                        axios
+                          .post(
+                            `${API}/urs/character/saveCharacter`,
+                            {
+                              name,
+                              portraitUrl: avatar,
+                              accountId:
+                                window.localStorage.getItem("accountId"),
+                              tags: tagName,
+                              template:
+                                templateList[selectTemplate].description,
+                              slots: {
+                                emotion,
+                              },
+                            },
+                            {
+                              headers: {
+                                Authorization:
+                                  window.localStorage.getItem("token"),
+                              },
+                            }
+                          )
+                          .then((res) => {
+                            console.log(res, "??");
+                          });
+                      }}
+                      className="h-14 text-white rounded-2xl px-11 cursor-pointer bg-[#25D4D0] flex justify-center items-center ml-8"
+                    >
+                      Create
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         )}
       </div>
+      <TailwindToaster />
     </div>
   );
 }
