@@ -110,7 +110,7 @@ export default function Layout({ ...props }) {
   }, []);
 
   return (
-    <div className="w-full relative h-full flex bg-[#1f2128] min-h-screen">
+    <div className="w-full relative h-full flex bg-[#1f2128] min-h-screen max-h-screen">
       <div className="px-5 pt-10 w-[16rem]">
         <div>
           <img src="/img/logo.svg" alt="logo" className="" />
