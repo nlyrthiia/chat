@@ -43,6 +43,7 @@ export default function Layout({ ...props }) {
             }}
             onClick={() => {
               if (item === "Create") {
+                setToastShow(true);
               } else {
                 router.push(`/${item.toLocaleLowerCase()}`);
               }
@@ -138,25 +139,28 @@ export default function Layout({ ...props }) {
                 <span className="font-bold text-lg text-white">
                   Define Silicon-based Soul
                 </span>
-                <img src="/img/close.svg" alt="close" className="ml-auto" />
+                <img
+                  src="/img/close.svg"
+                  alt="close"
+                  className="ml-auto cursor-pointer"
+                  onClick={() => setToastShow(false)}
+                />
               </div>
               <div className="mt-6 flex">
                 <div
-                  onClick={() => setToastTag(0)}
-                  className="cursor-pointer h-9 px-5 rounded-lg text-white text-sm font-semibold flex items-center justify-center"
+                  className="h-9 px-5 cursor-default rounded-lg text-white text-sm font-semibold flex items-center justify-center"
                   style={{
-                    background: toastTag === 0 ? "#25D4D0" : "transparent",
-                    color: toastTag === 0 ? "#fff" : "#808191",
+                    background: toastStep === 0 ? "#25D4D0" : "transparent",
+                    color: toastStep === 0 ? "#fff" : "#808191",
                   }}
                 >
                   Custom
                 </div>
                 <div
-                  onClick={() => setToastTag(1)}
-                  className="ml-2 h-9 px-5 rounded-lg text-sm font-semibold flex justify-center items-center cursor-pointer"
+                  className="ml-2 h-9 cursor-default px-5 rounded-lg text-sm font-semibold flex justify-center items-center"
                   style={{
-                    background: toastTag === 1 ? "#25D4D0" : "transparent",
-                    color: toastTag === 1 ? "#fff" : "#808191",
+                    background: toastStep === 1 ? "#25D4D0" : "transparent",
+                    color: toastStep === 1 ? "#fff" : "#808191",
                   }}
                 >
                   Template
@@ -175,6 +179,14 @@ export default function Layout({ ...props }) {
                 className="mt-4 px-6 h-[16rem] bg-[#373a43] py-4 outline-none border border-[#E4E4E41A] rounded-lg w-full resize-none text-sm font-medium placeholder:text-[#808191] text-white"
                 placeholder="Describe the soul as you wich, in detail."
               />
+              <div
+                onClick={() => {
+                  setToastStep(1);
+                }}
+                className="mt-8 h-14 bg-[#808191] rounded-2xl cursor-pointer text-white text-sm font-bold w-[9.5rem] flex justify-center items-center"
+              >
+                Next step
+              </div>
             </div>
           </div>
         )}
