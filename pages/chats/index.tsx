@@ -39,7 +39,7 @@ export default function Chats() {
 
   const [result, setResult] = useState<any>([]);
 
-  const getChats = () => {
+  const getChats = async () => {
     const token = window.localStorage.getItem("token");
     const accountId: any = window.localStorage.getItem("accountId");
     const email: any = window.localStorage.getItem("email");
@@ -48,8 +48,8 @@ export default function Chats() {
         .post(
           `${API}/urs/character/listCharacters`,
           {
-            accountId,
-            listCharacterTypeEnum: "MY",
+            // accountId,
+            listCharacterTypeEnum: "HOME",
           },
           {
             headers: {
@@ -134,7 +134,10 @@ export default function Chats() {
                   window.localStorage.getItem("chatList") || "{}"
                 );
 
-                if (chatList[item.characterId]) {
+                if (
+                  chatList[item.characterId] ||
+                  character == item.characterId
+                ) {
                   return (
                     <div
                       className="flex px-5 h-20 items-center w-[21rem] cursor-default hover:bg-[#20454a] rounded-xl"
@@ -458,7 +461,7 @@ export default function Chats() {
 
                       const _characterList = [...characterList];
                       const index = _characterList.findIndex(
-                        (item) => item.characterId === characterId
+                        (item) => item.characterId == characterId
                       );
                       const current = _characterList[index];
                       _characterList.splice(index, 1);
