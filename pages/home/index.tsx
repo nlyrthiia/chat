@@ -114,7 +114,7 @@ export default function Home() {
                   alt="avatar"
                 />
                 <div className="ml-3 text-[#808191] font-medium text-xs">
-                  @{item.name}
+                  @{item.slots["#username#"] || item.slots["#user#"]}
                 </div>
               </div>
             </div>
