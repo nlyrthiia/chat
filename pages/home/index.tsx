@@ -48,7 +48,9 @@ export default function Home() {
         axios
           .post(
             `${API}/urs/character/listCharacters`,
-            {},
+            {
+              listCharacterTypeEnum: "HOME",
+            },
             {
               headers: {
                 Authorization: token,

@@ -48,7 +48,8 @@ export default function Chats() {
         .post(
           `${API}/urs/character/listCharacters`,
           {
-            accountId: tag === 0 ? null : accountId,
+            accountId,
+            listCharacterTypeEnum: "MY",
           },
           {
             headers: {
