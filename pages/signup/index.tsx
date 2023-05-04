@@ -37,6 +37,9 @@ export default function Home() {
   const router = useRouter();
 
   const signUpHandler = () => {
+    if (password !== repassword) {
+      return toast.error("Inconsistent passwords");
+    }
     axios
       .post(`${API}/urs/account/register`, {
         firstName,
@@ -50,6 +53,8 @@ export default function Home() {
           setTimeout(() => {
             router.push("/");
           }, 1000);
+        } else if (res.data.code === 102) {
+          return toast.error("“Existed user, please sign in");
         }
       });
   };

@@ -86,7 +86,15 @@ export default function Chats() {
   }, []);
 
   useEffect(() => {
-    setResult([]);
+    let chatList: any = JSON.parse(
+      window.localStorage.getItem("chatList") || "{}"
+    );
+
+    if (chatList[characterId as any]) {
+      setResult(chatList[characterId as any]);
+    } else {
+      setResult([]);
+    }
   }, [characterId]);
 
   return (
@@ -119,47 +127,99 @@ export default function Chats() {
                 </div>
               ))}
             </div>
-            {characterList.map((item: any, index) => (
-              <div
-                className="flex px-5 h-20 items-center w-[21rem] cursor-default hover:bg-[#20454a] rounded-xl"
-                style={{
-                  background:
-                    Number(characterId) === Number(item.characterId)
-                      ? "#20454a"
-                      : "",
-                  display:
-                    tag === 0
-                      ? "flex"
-                      : item.creatorAccountId === userInfo.accountId
-                      ? "flex"
-                      : "none",
-                }}
-                onClick={() => setCharacterId(item.characterId)}
-              >
-                <div>
-                  <img
-                    src={
-                      item.portraitUrl
-                        ? item.portraitUrl
-                        : "/img/mini-avatar.svg"
-                    }
-                    alt="avatar"
-                    className="w-12 h-12 rounded-full overflow-hidden"
-                  />
-                </div>
-                <div className="flex flex-col ml-4">
-                  <div className="text-sm font-semibold text-white">
-                    {item.name}
+            {characterList.map((item: any, index) => {
+              if (tag === 0) {
+                const chatList = JSON.parse(
+                  window.localStorage.getItem("chatList") || "{}"
+                );
+
+                if (chatList[item.characterId]) {
+                  return (
+                    <div
+                      className="flex px-5 h-20 items-center w-[21rem] cursor-default hover:bg-[#20454a] rounded-xl"
+                      style={{
+                        background:
+                          Number(characterId) === Number(item.characterId)
+                            ? "#20454a"
+                            : "",
+                        display:
+                          tag === 0
+                            ? "flex"
+                            : item.creatorAccountId === userInfo.accountId
+                            ? "flex"
+                            : "none",
+                      }}
+                      onClick={() => setCharacterId(item.characterId)}
+                    >
+                      <div>
+                        <img
+                          src={
+                            item.portraitUrl
+                              ? item.portraitUrl
+                              : "/img/mini-avatar.svg"
+                          }
+                          alt="avatar"
+                          className="w-12 h-12 rounded-full overflow-hidden"
+                        />
+                      </div>
+                      <div className="flex flex-col ml-4">
+                        <div className="text-sm font-semibold text-white">
+                          {item.name}
+                        </div>
+                        <div className="text-sm font-semibold text-white mt-1">
+                          {getTime(item.lastChatTime)}
+                        </div>
+                      </div>
+                      <div className="flex ml-auto">
+                        <img src="/img/right.svg" alt="right" />
+                      </div>
+                    </div>
+                  );
+                }
+              } else {
+                return (
+                  <div
+                    className="flex px-5 h-20 items-center w-[21rem] cursor-default hover:bg-[#20454a] rounded-xl"
+                    style={{
+                      background:
+                        Number(characterId) === Number(item.characterId)
+                          ? "#20454a"
+                          : "",
+                      display:
+                        tag === 0
+                          ? "flex"
+                          : item.creatorAccountId === userInfo.accountId
+                          ? "flex"
+                          : "none",
+                    }}
+                    onClick={() => setCharacterId(item.characterId)}
+                  >
+                    <div>
+                      <img
+                        src={
+                          item.portraitUrl
+                            ? item.portraitUrl
+                            : "/img/mini-avatar.svg"
+                        }
+                        alt="avatar"
+                        className="w-12 h-12 rounded-full overflow-hidden"
+                      />
+                    </div>
+                    <div className="flex flex-col ml-4">
+                      <div className="text-sm font-semibold text-white">
+                        {item.name}
+                      </div>
+                      <div className="text-sm font-semibold text-white mt-1">
+                        {getTime(item.lastChatTime)}
+                      </div>
+                    </div>
+                    <div className="flex ml-auto">
+                      <img src="/img/right.svg" alt="right" />
+                    </div>
                   </div>
-                  <div className="text-sm font-semibold text-white mt-1">
-                    {getTime(item.lastChatTime)}
-                  </div>
-                </div>
-                <div className="flex ml-auto">
-                  <img src="/img/right.svg" alt="right" />
-                </div>
-              </div>
-            ))}
+                );
+              }
+            })}
           </div>
           <div
             className="w-px bg-[#33343b]"
@@ -212,9 +272,11 @@ export default function Chats() {
                                       Number(characterId)
                                   )?.name}
                             </span>
-                            <span className="ml-4 text-[#808191] text-xs font-medium">
-                              {getTime(item.createTime)}
-                            </span>
+                            {index === result.length - 1 && (
+                              <span className="ml-4 text-[#808191] text-xs font-medium">
+                                {getTime(item.createTime)}
+                              </span>
+                            )}
                           </div>
                           <div
                             className="bg-[#E4E4E41A] mt-4 px-6 py-4 text-[#808191] text-sm font-normal"
@@ -274,6 +336,15 @@ export default function Chats() {
                             message: value,
                             createTime: new Date().getTime(),
                           };
+
+                          let chatList: any = JSON.parse(
+                            window.localStorage.getItem("chatList") || "{}"
+                          );
+                          chatList[characterId as any] = [...result, newChat];
+                          window.localStorage.setItem(
+                            "chatList",
+                            JSON.stringify(chatList)
+                          );
                           return [...result, newChat];
                         } else {
                           const newChat = {
@@ -282,6 +353,15 @@ export default function Chats() {
                             message: value,
                             createTime: new Date().getTime(),
                           };
+
+                          let chatList: any = JSON.parse(
+                            window.localStorage.getItem("chatList") || "{}"
+                          );
+                          chatList[characterId as any] = [...result, newChat];
+                          window.localStorage.setItem(
+                            "chatList",
+                            JSON.stringify(chatList)
+                          );
                           return [...result, newChat];
                         }
                       });
@@ -329,6 +409,18 @@ export default function Chats() {
                                   message,
                                   createTime: new Date().getTime(),
                                 };
+                                let chatList: any = JSON.parse(
+                                  window.localStorage.getItem("chatList") ||
+                                    "{}"
+                                );
+                                chatList[characterId as any] = [
+                                  ...result,
+                                  newChat,
+                                ];
+                                window.localStorage.setItem(
+                                  "chatList",
+                                  JSON.stringify(chatList)
+                                );
                                 return [...result, newChat];
                               } else {
                                 const newChat = {
@@ -337,6 +429,18 @@ export default function Chats() {
                                   message,
                                   createTime: new Date().getTime(),
                                 };
+                                let chatList: any = JSON.parse(
+                                  window.localStorage.getItem("chatList") ||
+                                    "{}"
+                                );
+                                chatList[characterId as any] = [
+                                  ...result,
+                                  newChat,
+                                ];
+                                window.localStorage.setItem(
+                                  "chatList",
+                                  JSON.stringify(chatList)
+                                );
                                 return [...result, newChat];
                               }
                             });
@@ -350,6 +454,15 @@ export default function Chats() {
                         });
 
                       setMessage("");
+
+                      const _characterList = [...characterList];
+                      const index = _characterList.findIndex(
+                        (item) => item.characterId === characterId
+                      );
+                      const current = _characterList[index];
+                      _characterList.splice(index, 1);
+                      _characterList.unshift(current);
+                      setCharacterList(_characterList);
 
                       scrollRef.current?.scrollTo({
                         top: scrollRef.current.scrollHeight,

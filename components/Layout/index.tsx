@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
 import { Toaster, ToastIcon, toast, resolveValue } from "react-hot-toast";
 import { Transition } from "@headlessui/react";
+import { templates } from "@/contans";
 
 const TailwindToaster = () => {
   return (
@@ -37,7 +38,7 @@ export default function Layout({ ...props }) {
   const [toastStep, setToastStep] = useState(1);
   const [soul, setSoul] = useState("");
   const [customPrompt, setCustomPrompt] = useState("");
-  const [templateList, setTemplateList] = useState([]);
+  const [templateList, setTemplateList] = useState(templates);
   const [templateTitle, setTemplateTitle] = useState("");
   const [templateStory, setTemplateStory] = useState("");
   const [templateEmotion, setTemplateEmotion] = useState("");
@@ -46,67 +47,47 @@ export default function Layout({ ...props }) {
   const [tagName, setTagName] = useState("");
   const [search, setSearch] = useState(router.query.search);
   const [showSelect, setShowSelect] = useState(false);
-  const [selectTemplate, setSelectTemplate] = useState(null);
+  const [selectTemplate, setSelectTemplate] = useState<any>(null);
   const [emotion, setEmotion] = useState("");
   const [showAvatar, setShowAvatar] = useState("");
   const uploadRef = useRef(null);
+  const [templateInfo, setTemplateInfo] = useState<any>({});
+  const [userInfo, setUserInfo] = useState<any>({});
 
   useEffect(() => {
     setSearch(router.query.search);
   }, [router.query.search]);
 
+  const parseKey = (key: string) => {
+    return key.replace(/#/g, "").replace(/{/g, "").replace(/}/g, "").trim();
+  };
+
+  useEffect(() => {
+    setTemplateInfo(templateList[selectTemplate]);
+  }, [selectTemplate]);
+
   useEffect(() => {
     const token = window.localStorage.getItem("token");
-
-    axios
-      .post(
-        `${API}/urs/character/listTemplate`,
-        {},
-        {
-          headers: {
-            Authorization: token,
-          },
-        }
-      )
-      .then((res) => {
-        if (res.data.code === 0) {
-          // setTemplateList(res.data.data.templateDTOList);
-          setTemplateList([
-            {
-              content: "this is a template content",
-              createTime: 1682215908,
-              creatorAccountId: 123456789,
-              description: "this is a template description",
-              modifyTime: 1682215908,
-              templateId: 123456789,
+    const accountId: any = window.localStorage.getItem("accountId");
+    const email: any = window.localStorage.getItem("email");
+    if (token && accountId) {
+      axios
+        .post(
+          `${API}/urs/account/getAccount`,
+          { accountId, email },
+          {
+            headers: {
+              Authorization: token,
             },
-            {
-              content: "this is a template content",
-              createTime: 1682215908,
-              creatorAccountId: 123456789,
-              description: "this is a template description",
-              modifyTime: 1682215908,
-              templateId: 123456789,
-            },
-            {
-              content: "this is a template content",
-              createTime: 1682215908,
-              creatorAccountId: 123456789,
-              description: "this is a template description",
-              modifyTime: 1682215908,
-              templateId: 123456789,
-            },
-            {
-              content: "this is a template content",
-              createTime: 1682215908,
-              creatorAccountId: 123456789,
-              description: "this is a template description",
-              modifyTime: 1682215908,
-              templateId: 123456789,
-            },
-          ]);
-        }
-      });
+          }
+        )
+        .then((res) => {
+          if (res.data.code === 0) {
+            const data = res.data.data;
+            setUserInfo(data);
+          }
+        });
+    }
   }, []);
 
   return (
@@ -219,10 +200,10 @@ export default function Layout({ ...props }) {
         {props.children}
         {toastShow && (
           <div className="absolute top-0 left-0 right-0 bottom-0 bg-[#1B1D21] bg-opacity-90">
-            <div className="absolute top-1/2 w-[35rem] px-8 py-12 bg-[#242731] rounded-3xl left-1/2 -translate-x-1/2 -translate-y-1/2">
+            <div className="absolute top-1/2 w-[35rem] px-8 py-12 bg-[#242731] rounded-3xl left-1/2 -translate-x-1/2 -translate-y-1/2 max-h-[40rem] overflow-auto">
               <div className="flex items-center justify-between">
                 <span className="font-bold text-lg text-white">
-                  {toastStep < 2
+                  {toastStep < 3
                     ? "Define Silicon-based Soul"
                     : "Ready to arrive!"}
                 </span>
@@ -286,7 +267,7 @@ export default function Layout({ ...props }) {
                         <div className="text-[#808191] text-sm font-semibold">
                           {selectTemplate ? (
                             <span className="text-white">
-                              {templateList[selectTemplate].content}
+                              {templateList[selectTemplate].title}
                             </span>
                           ) : (
                             "Choose a kind of soul..."
@@ -305,7 +286,7 @@ export default function Layout({ ...props }) {
                                   }}
                                   className="text-white cursor-default text-sm font-semibold h-14 bg-[#242731] flex justify-between items-center rounded-lg"
                                 >
-                                  {item.content}
+                                  {item.title}
                                   {index === 0 && (
                                     <img src="/img/down.svg" alt="down" />
                                   )}
@@ -333,34 +314,65 @@ export default function Layout({ ...props }) {
                   {toastStep === 2 ? (
                     <div>
                       <div className="mt-4 cursor-default outline-none w-full rounded-lg bg-[#2e303a] border border-[#E4E4E41A] px-6 h-14 py-4 text-white placeholder:text-[#808191] text-sm font-semibold">
-                        {templateList[selectTemplate].content}
+                        {templateList[selectTemplate].title}
                       </div>
-                      <div className="text-[#808191] mt-8 text-xs font-medium">
-                        Story
-                      </div>
-                      <div className="mt-4 px-6 cursor-default h-[6rem] bg-[#373a43] py-4 outline-none border border-[#E4E4E41A] rounded-lg w-full resize-none text-sm font-medium placeholder:text-[#808191] text-white">
-                        {templateList[selectTemplate].description}
-                      </div>
-                      <div className="text-[#808191] mt-8 text-xs font-medium">
-                        Emotion
-                      </div>
-                      <textarea
-                        className="mt-4 px-6 h-[6rem] bg-[#373a43] py-4 outline-none border border-[#E4E4E41A] rounded-lg w-full resize-none text-sm font-medium placeholder:text-[#808191] text-white"
-                        value={emotion}
-                        onChange={(e) => setEmotion(e.target.value)}
-                      />
+                      {templateInfo &&
+                        Object.keys(templateInfo.defaultValue).map(
+                          (item, index) => {
+                            if (item !== "#name#" && item !== "#username#") {
+                              return (
+                                <div>
+                                  <div className="text-[#808191] mt-8 text-xs font-medium">
+                                    {parseKey(item)}
+                                  </div>
+                                  <textarea
+                                    className="mt-4 px-6 h-[6rem] bg-[#373a43] py-4 outline-none border border-[#E4E4E41A] rounded-lg w-full resize-none text-sm font-medium placeholder:text-[#808191] text-white"
+                                    value={templateInfo.defaultValue[item]}
+                                    onChange={(e) => {
+                                      const value = e.target.value;
+                                      setTemplateInfo((templateInfo) => {
+                                        const defaultValue =
+                                          templateInfo.defaultValue;
+                                        if (defaultValue[item]) {
+                                          defaultValue[item] = value;
+                                        }
+
+                                        return {
+                                          ...templateInfo,
+                                          defaultValue,
+                                        };
+                                      });
+                                    }}
+                                  />
+                                </div>
+                              );
+                            }
+                          }
+                        )}
                     </div>
                   ) : null}
-                  <div
-                    onClick={() => {
-                      setToastStep((toastStep) => toastStep + 1);
-                    }}
-                    className="h-14 mt-14 rounded-2xl cursor-pointer text-white text-sm font-bold w-[9.5rem] flex justify-center items-center"
-                    style={{
-                      background: toastStep === 1 ? "#808191" : "#25D4D0",
-                    }}
-                  >
-                    Next step
+                  <div className="flex mt-14 ">
+                    {toastStep !== 1 && (
+                      <div
+                        onClick={() => {
+                          setToastStep((toastStep) => toastStep - 1);
+                        }}
+                        className="h-14 text-white border border-[#808191] cursor-pointer rounded-2xl px-11 bg-transparent flex justify-center items-center"
+                      >
+                        Back
+                      </div>
+                    )}
+                    <div
+                      onClick={() => {
+                        setToastStep((toastStep) => toastStep + 1);
+                      }}
+                      className="h-14 rounded-2xl ml-8 cursor-pointer text-white text-sm font-bold w-[9.5rem] flex justify-center items-center"
+                      style={{
+                        background: toastStep === 1 ? "#808191" : "#25D4D0",
+                      }}
+                    >
+                      Next step
+                    </div>
                   </div>
                 </div>
               ) : (
@@ -456,6 +468,11 @@ export default function Layout({ ...props }) {
                     </div>
                     <div
                       onClick={() => {
+                        const slots = {
+                          ...templateInfo.defaultValue,
+                          "#name#": name,
+                          "#username#": `${userInfo.firstName} ${userInfo.lastName}`,
+                        };
                         axios
                           .post(
                             `${API}/urs/character/saveCharacter`,
@@ -465,11 +482,8 @@ export default function Layout({ ...props }) {
                               accountId:
                                 window.localStorage.getItem("accountId"),
                               tags: tagName,
-                              template:
-                                templateList[selectTemplate].description,
-                              slots: {
-                                emotion,
-                              },
+                              template: templateInfo.content,
+                              slots,
                             },
                             {
                               headers: {

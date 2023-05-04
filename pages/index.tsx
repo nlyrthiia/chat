@@ -1,12 +1,20 @@
 import { API } from "@/contans";
 import axios from "axios";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function Home() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
+
+  useEffect(() => {
+    const token = window.localStorage.getItem("token");
+
+    if (token) {
+      router.push("/home");
+    }
+  }, []);
 
   const loginHandler = () => {
     axios
