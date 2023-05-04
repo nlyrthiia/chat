@@ -1,7 +1,7 @@
 import { API } from "@/contans";
 import axios from "axios";
 import { useRouter } from "next/router";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Toaster, ToastIcon, toast, resolveValue } from "react-hot-toast";
 import { Transition } from "@headlessui/react";
 import { templates } from "@/contans";
@@ -89,6 +89,28 @@ export default function Layout({ ...props }) {
         });
     }
   }, []);
+
+  const getAllPasss = useCallback(() => {
+    if (!name) {
+      return false;
+    }
+    if (!avatar) {
+      return false;
+    }
+    if (!tagName) {
+      return false;
+    }
+
+    const defaultValue = templateInfo.defaultValue;
+
+    for (let key in defaultValue) {
+      if (!defaultValue[key]) {
+        return false;
+      }
+    }
+
+    return true;
+  }, [name, avatar, tagName, templateInfo]);
 
   return (
     <div className="w-full relative h-full flex bg-[#1f2128] min-h-screen max-h-screen">
@@ -319,7 +341,7 @@ export default function Layout({ ...props }) {
                       {templateInfo &&
                         Object.keys(templateInfo.defaultValue).map(
                           (item, index) => {
-                            if (item !== "#name#" && item !== "#username#") {
+                            if (item !== "#bot#" && item !== "#user#") {
                               return (
                                 <div>
                                   <div className="text-[#808191] mt-8 text-xs font-medium">
@@ -333,9 +355,7 @@ export default function Layout({ ...props }) {
                                       setTemplateInfo((templateInfo) => {
                                         const defaultValue =
                                           templateInfo.defaultValue;
-                                        if (defaultValue[item]) {
-                                          defaultValue[item] = value;
-                                        }
+                                        defaultValue[item] = value;
 
                                         return {
                                           ...templateInfo,
@@ -468,10 +488,14 @@ export default function Layout({ ...props }) {
                     </div>
                     <div
                       onClick={() => {
+                        if (!getAllPasss()) {
+                          return;
+                        }
+
                         const slots = {
                           ...templateInfo.defaultValue,
-                          "#name#": name,
-                          "#username#": `${userInfo.firstName} ${userInfo.lastName}`,
+                          "#bot#": name,
+                          "#user#": `${userInfo.firstName} ${userInfo.lastName}`,
                         };
                         axios
                           .post(
@@ -507,7 +531,10 @@ export default function Layout({ ...props }) {
                             }
                           });
                       }}
-                      className="h-14 text-white rounded-2xl px-11 cursor-pointer bg-[#25D4D0] flex justify-center items-center ml-8"
+                      style={{
+                        background: getAllPasss() ? "#25D4D0" : "#808191",
+                      }}
+                      className="h-14 text-white rounded-2xl px-11 cursor-pointer flex justify-center items-center ml-8"
                     >
                       Create
                     </div>

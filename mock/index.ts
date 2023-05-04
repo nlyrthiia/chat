@@ -4,7 +4,7 @@ export const characterDTOList = [
 				"name": "John",
 				"tags": "Assistant,Teacher",
 				"portraitUrl": "Assistant,Teacher",
-				"template": "You are #name#: #name# is the {relationship} of #user#\n\nThe style of conversation between #name# and #user# is based on the following records:\n\n{conversation}\n\nNote special punctuation, recurring words, beginning and ending of sentences, and intonation words to match the character.\n\n#10 rounds dialog history#",
+				"template": "You are #bot#: #bot# is the {relationship} of #user#\n\nThe style of conversation between #bot# and #user# is based on the following records:\n\n{conversation}\n\nNote special punctuation, recurring words, beginning and ending of sentences, and intonation words to match the character.\n\n#10 rounds dialog history#",
 				"slots": {
 					"additionalProp1": "string",
 					"additionalProp3": "string",
@@ -21,7 +21,7 @@ export const characterDTOList = [
 				"name": "John",
 				"tags": "Assistant,Teacher",
 				"portraitUrl": "Assistant,Teacher",
-				"template": "You are #name#: #name# is the {relationship} of #user#\n\nThe style of conversation between #name# and #user# is based on the following records:\n\n{conversation}\n\nNote special punctuation, recurring words, beginning and ending of sentences, and intonation words to match the character.\n\n#10 rounds dialog history#",
+				"template": "You are #bot#: #bot# is the {relationship} of #user#\n\nThe style of conversation between #bot# and #user# is based on the following records:\n\n{conversation}\n\nNote special punctuation, recurring words, beginning and ending of sentences, and intonation words to match the character.\n\n#10 rounds dialog history#",
 				"slots": {
 					"additionalProp1": "string",
 					"additionalProp3": "string",
@@ -38,7 +38,7 @@ export const characterDTOList = [
 				"name": "John",
 				"tags": "Assistant,Teacher",
 				"portraitUrl": "Assistant,Teacher",
-				"template": "You are #name#: #name# is the {relationship} of #user#\n\nThe style of conversation between #name# and #user# is based on the following records:\n\n{conversation}\n\nNote special punctuation, recurring words, beginning and ending of sentences, and intonation words to match the character.\n\n#10 rounds dialog history#",
+				"template": "You are #bot#: #bot# is the {relationship} of #user#\n\nThe style of conversation between #bot# and #user# is based on the following records:\n\n{conversation}\n\nNote special punctuation, recurring words, beginning and ending of sentences, and intonation words to match the character.\n\n#10 rounds dialog history#",
 				"slots": {
 					"additionalProp1": "string",
 					"additionalProp3": "string",
@@ -55,7 +55,7 @@ export const characterDTOList = [
 				"name": "John",
 				"tags": "Assistant,Teacher",
 				"portraitUrl": "Assistant,Teacher",
-				"template": "You are #name#: #name# is the {relationship} of #user#\n\nThe style of conversation between #name# and #user# is based on the following records:\n\n{conversation}\n\nNote special punctuation, recurring words, beginning and ending of sentences, and intonation words to match the character.\n\n#10 rounds dialog history#",
+				"template": "You are #bot#: #bot# is the {relationship} of #user#\n\nThe style of conversation between #bot# and #user# is based on the following records:\n\n{conversation}\n\nNote special punctuation, recurring words, beginning and ending of sentences, and intonation words to match the character.\n\n#10 rounds dialog history#",
 				"slots": {
 					"additionalProp1": "string",
 					"additionalProp3": "string",
@@ -72,7 +72,7 @@ export const characterDTOList = [
 				"name": "John",
 				"tags": "Assistant,Teacher",
 				"portraitUrl": "Assistant,Teacher",
-				"template": "You are #name#: #name# is the {relationship} of #user#\n\nThe style of conversation between #name# and #user# is based on the following records:\n\n{conversation}\n\nNote special punctuation, recurring words, beginning and ending of sentences, and intonation words to match the character.\n\n#10 rounds dialog history#",
+				"template": "You are #bot#: #bot# is the {relationship} of #user#\n\nThe style of conversation between #bot# and #user# is based on the following records:\n\n{conversation}\n\nNote special punctuation, recurring words, beginning and ending of sentences, and intonation words to match the character.\n\n#10 rounds dialog history#",
 				"slots": {
 					"additionalProp1": "string",
 					"additionalProp3": "string",
@@ -89,7 +89,7 @@ export const characterDTOList = [
 				"name": "John",
 				"tags": "Assistant,Teacher",
 				"portraitUrl": "Assistant,Teacher",
-				"template": "You are #name#: #name# is the {relationship} of #user#\n\nThe style of conversation between #name# and #user# is based on the following records:\n\n{conversation}\n\nNote special punctuation, recurring words, beginning and ending of sentences, and intonation words to match the character.\n\n#10 rounds dialog history#",
+				"template": "You are #bot#: #bot# is the {relationship} of #user#\n\nThe style of conversation between #bot# and #user# is based on the following records:\n\n{conversation}\n\nNote special punctuation, recurring words, beginning and ending of sentences, and intonation words to match the character.\n\n#10 rounds dialog history#",
 				"slots": {
 					"additionalProp1": "string",
 					"additionalProp3": "string",
@@ -106,7 +106,7 @@ export const characterDTOList = [
 				"name": "John",
 				"tags": "Assistant,Teacher",
 				"portraitUrl": "Assistant,Teacher",
-				"template": "You are #name#: #name# is the {relationship} of #user#\n\nThe style of conversation between #name# and #user# is based on the following records:\n\n{conversation}\n\nNote special punctuation, recurring words, beginning and ending of sentences, and intonation words to match the character.\n\n#10 rounds dialog history#",
+				"template": "You are #bot#: #bot# is the {relationship} of #user#\n\nThe style of conversation between #bot# and #user# is based on the following records:\n\n{conversation}\n\nNote special punctuation, recurring words, beginning and ending of sentences, and intonation words to match the character.\n\n#10 rounds dialog history#",
 				"slots": {
 					"additionalProp1": "string",
 					"additionalProp3": "string",
@@ -123,7 +123,7 @@ export const characterDTOList = [
 				"name": "John",
 				"tags": "Assistant,Teacher",
 				"portraitUrl": "Assistant,Teacher",
-				"template": "You are #name#: #name# is the {relationship} of #user#\n\nThe style of conversation between #name# and #user# is based on the following records:\n\n{conversation}\n\nNote special punctuation, recurring words, beginning and ending of sentences, and intonation words to match the character.\n\n#10 rounds dialog history#",
+				"template": "You are #bot#: #bot# is the {relationship} of #user#\n\nThe style of conversation between #bot# and #user# is based on the following records:\n\n{conversation}\n\nNote special punctuation, recurring words, beginning and ending of sentences, and intonation words to match the character.\n\n#10 rounds dialog history#",
 				"slots": {
 					"additionalProp1": "string",
 					"additionalProp3": "string",
@@ -140,7 +140,7 @@ export const characterDTOList = [
 				"name": "John",
 				"tags": "Assistant,Teacher",
 				"portraitUrl": "Assistant,Teacher",
-				"template": "You are #name#: #name# is the {relationship} of #user#\n\nThe style of conversation between #name# and #user# is based on the following records:\n\n{conversation}\n\nNote special punctuation, recurring words, beginning and ending of sentences, and intonation words to match the character.\n\n#10 rounds dialog history#",
+				"template": "You are #bot#: #bot# is the {relationship} of #user#\n\nThe style of conversation between #bot# and #user# is based on the following records:\n\n{conversation}\n\nNote special punctuation, recurring words, beginning and ending of sentences, and intonation words to match the character.\n\n#10 rounds dialog history#",
 				"slots": {
 					"additionalProp1": "string",
 					"additionalProp3": "string",

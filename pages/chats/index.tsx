@@ -96,6 +96,12 @@ export default function Chats() {
     } else {
       setResult([]);
     }
+
+    setTimeout(() => {
+      scrollRef.current?.scrollTo({
+        top: scrollRef.current.scrollHeight,
+      });
+    }, 0);
   }, [characterId]);
 
   return (
@@ -171,7 +177,7 @@ export default function Chats() {
                           {item.name}
                         </div>
                         <div className="text-sm font-semibold text-white mt-1">
-                          {getTime(item.lastChatTime)}
+                          {getTime(item.modifyTime * 1000)}
                         </div>
                       </div>
                       <div className="flex ml-auto">
@@ -214,7 +220,7 @@ export default function Chats() {
                         {item.name}
                       </div>
                       <div className="text-sm font-semibold text-white mt-1">
-                        {getTime(item.lastChatTime)}
+                        {getTime(item.modifyTime * 1000)}
                       </div>
                     </div>
                     <div className="flex ml-auto">
@@ -329,6 +335,15 @@ export default function Chats() {
                     if (e.key === "Enter") {
                       const value = e.target.value;
 
+                      // 如果为空，不发送
+                      if (!value.trim()) {
+                        return;
+                      }
+
+                      if (entering) {
+                        return;
+                      }
+
                       setResult((result) => {
                         if (
                           result.length &&
@@ -371,6 +386,11 @@ export default function Chats() {
                       });
 
                       setEntering(true);
+                      setTimeout(() => {
+                        scrollRef.current?.scrollTo({
+                          top: scrollRef.current.scrollHeight,
+                        });
+                      }, 0);
 
                       axios
                         .post(
@@ -451,13 +471,20 @@ export default function Chats() {
                           }
                         })
                         .finally(() => {
-                          scrollRef.current?.scrollTo({
-                            top: scrollRef.current.scrollHeight,
-                          });
+                          setTimeout(() => {
+                            scrollRef.current?.scrollTo({
+                              top: scrollRef.current.scrollHeight,
+                            });
+                          }, 0);
                           setEntering(false);
                         });
 
                       setMessage("");
+                      setTimeout(() => {
+                        scrollRef.current?.scrollTo({
+                          top: scrollRef.current.scrollHeight,
+                        });
+                      }, 0);
 
                       const _characterList = [...characterList];
                       const index = _characterList.findIndex(
@@ -467,10 +494,6 @@ export default function Chats() {
                       _characterList.splice(index, 1);
                       _characterList.unshift(current);
                       setCharacterList(_characterList);
-
-                      scrollRef.current?.scrollTo({
-                        top: scrollRef.current.scrollHeight,
-                      });
                     }
                   }}
                   className="w-full px-6 h-10 bg-transparent border border-[#808191] outline-none rounded-2xl text-sm font-normal placeholder:#808191 text-white"
