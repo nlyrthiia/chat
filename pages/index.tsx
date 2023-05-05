@@ -37,7 +37,7 @@ export default function Home() {
       <div className="pt-24 pl-24 cursor-default">
         <img src="/img/logo.svg" alt="logo" className="" />
       </div>
-      <div className="flex pb-56">
+      <div className="flex pb-56 justify-center">
         <div>
           <img src="/img/hero.png" alt="hero" className="h-[40rem]" />
         </div>

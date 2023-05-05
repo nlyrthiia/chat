@@ -286,7 +286,7 @@ export default function Chats() {
                           className="w-14 h-14 rounded-full overflow-hidden"
                           alt="avatar"
                         />
-                        <div className="ml-5 flex-1 mr-36">
+                        <div className="ml-5  mr-36">
                           <div className="flex">
                             <span className="text-white text-xs font-medium">
                               {item.type === "me"

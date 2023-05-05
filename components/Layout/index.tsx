@@ -55,6 +55,17 @@ export default function Layout({ ...props }) {
   const [userInfo, setUserInfo] = useState<any>({});
 
   useEffect(() => {
+    // 判断当前是否是signup或者/页面，如果不是，判断token是否存在，不存在跳转到登录页面
+    if (
+      router.pathname !== "/signup" &&
+      router.pathname !== "/" &&
+      !window.localStorage.getItem("token")
+    ) {
+      router.push("/");
+    }
+  }, []);
+
+  useEffect(() => {
     setSearch(router.query.search);
   }, [router.query.search]);
 
@@ -387,7 +398,7 @@ export default function Layout({ ...props }) {
                           if (selectTemplate || selectTemplate === 0) {
                             setToastStep((toastStep) => toastStep + 1);
                           } else {
-                            toast.error("Please choose a kind of soul");
+                            toast.error("Please select template");
                           }
                         } else {
                           setToastStep((toastStep) => toastStep + 1);
