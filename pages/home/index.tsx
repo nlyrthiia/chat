@@ -95,7 +95,7 @@ export default function Home() {
                   alt="avatar"
                 />
               </div>
-              <div className="flex mt-6">
+              <div className="flex mt-6 overflow-hidden">
                 {item.tags.split(",").map((tag, index) => (
                   <div className="mr-2 px-2 h-6 flex items-center  rounded-lg bg-[#243841] text-sm font-bold text-[#25D4D0]">
                     {tag}

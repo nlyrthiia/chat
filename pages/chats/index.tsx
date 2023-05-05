@@ -1,6 +1,5 @@
 import Layout from "@/components/Layout";
 import { API } from "@/contans";
-import { characterDTOList } from "@/mock";
 import axios from "axios";
 import { useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
@@ -176,7 +175,15 @@ export default function Chats() {
                         <div className="text-sm font-semibold text-white">
                           {item.name}
                         </div>
-                        <div className="text-sm font-semibold text-white mt-1">
+                        <div
+                          className="text-sm font-semibold mt-1"
+                          style={{
+                            color:
+                              Number(characterId) === Number(item.characterId)
+                                ? "#fff"
+                                : "#808191",
+                          }}
+                        >
                           {getTime(item.modifyTime * 1000)}
                         </div>
                       </div>
@@ -219,7 +226,15 @@ export default function Chats() {
                       <div className="text-sm font-semibold text-white">
                         {item.name}
                       </div>
-                      <div className="text-sm font-semibold text-white mt-1">
+                      <div
+                        className="text-sm font-semibold mt-1"
+                        style={{
+                          color:
+                            Number(characterId) === Number(item.characterId)
+                              ? "#fff"
+                              : "#808191",
+                        }}
+                      >
                         {getTime(item.modifyTime * 1000)}
                       </div>
                     </div>

@@ -101,16 +101,8 @@ export default function Layout({ ...props }) {
       return false;
     }
 
-    const defaultValue = templateInfo.defaultValue;
-
-    for (let key in defaultValue) {
-      if (!defaultValue[key]) {
-        return false;
-      }
-    }
-
     return true;
-  }, [name, avatar, tagName, templateInfo]);
+  }, [name, avatar, tagName]);
 
   return (
     <div className="w-full relative h-full flex bg-[#1f2128] min-h-screen max-h-screen">
@@ -287,7 +279,7 @@ export default function Layout({ ...props }) {
                         className="bg-[#232630] relative rounded-lg outline-none mt-4 w-full h-14 px-6 py-4 flex items-center justify-between"
                       >
                         <div className="text-[#808191] text-sm font-semibold">
-                          {selectTemplate ? (
+                          {selectTemplate || selectTemplate === 0 ? (
                             <span className="text-white">
                               {templateList[selectTemplate].title}
                             </span>
@@ -310,7 +302,14 @@ export default function Layout({ ...props }) {
                                 >
                                   {item.title}
                                   {index === 0 && (
-                                    <img src="/img/down.svg" alt="down" />
+                                    <img
+                                      src="/img/down.svg"
+                                      alt="down"
+                                      onClick={(e) => {
+                                        e.stopPropagation();
+                                        setShowSelect(false);
+                                      }}
+                                    />
                                   )}
                                 </div>
                               ))
@@ -384,7 +383,15 @@ export default function Layout({ ...props }) {
                     )}
                     <div
                       onClick={() => {
-                        setToastStep((toastStep) => toastStep + 1);
+                        if (toastStep === 1) {
+                          if (selectTemplate || selectTemplate === 0) {
+                            setToastStep((toastStep) => toastStep + 1);
+                          } else {
+                            toast.error("Please choose a kind of soul");
+                          }
+                        } else {
+                          setToastStep((toastStep) => toastStep + 1);
+                        }
                       }}
                       className="h-14 rounded-2xl ml-8 cursor-pointer text-white text-sm font-bold w-[9.5rem] flex justify-center items-center"
                       style={{
@@ -426,6 +433,7 @@ export default function Layout({ ...props }) {
                       Upload New
                     </div>
                     <input
+                      accept="image/png, image/jpeg, image/jpg"
                       onChange={(e) => {
                         const file = e.target.files[0];
                         if (file) {
@@ -520,6 +528,15 @@ export default function Layout({ ...props }) {
                             if (res.data.code === 0) {
                               toast.success(res.data.message);
                               setToastShow(false);
+
+                              setTemplateList(templates);
+                              setName("");
+                              setAvatar("");
+                              setTagName("");
+                              setShowSelect(false);
+                              setShowAvatar("");
+                              setTemplateInfo({});
+                              setToastStep(1);
 
                               setTimeout(() => {
                                 if (router.pathname !== "/home") {
