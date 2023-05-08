@@ -286,7 +286,7 @@ export default function Chats() {
                           className="w-14 h-14 rounded-full overflow-hidden"
                           alt="avatar"
                         />
-                        <div className="ml-5  mr-36">
+                        <div className="ml-5 flex-1 mr-36">
                           <div className="flex">
                             <span className="text-white text-xs font-medium">
                               {item.type === "me"
@@ -303,17 +303,19 @@ export default function Chats() {
                               </span>
                             )}
                           </div>
-                          <div
-                            className="bg-[#E4E4E41A] mt-4 px-6 py-4 text-[#808191] text-sm font-normal"
-                            style={{
-                              borderRadius: "20px 20px 20px 4px",
-                              lineHeight: "1.5rem",
-                              color: item.type === "me" ? "#808191" : "#fff",
-                              background:
-                                item.type === "me" ? "#E4E4E41A" : "#25D4D0",
-                            }}
-                          >
-                            {item.message}
+                          <div className="flex">
+                            <div
+                              className="bg-[#E4E4E41A] mt-4 px-6 py-4 text-[#808191] text-sm font-normal"
+                              style={{
+                                borderRadius: "20px 20px 20px 4px",
+                                lineHeight: "1.5rem",
+                                color: item.type === "me" ? "#808191" : "#fff",
+                                background:
+                                  item.type === "me" ? "#E4E4E41A" : "#25D4D0",
+                              }}
+                            >
+                              {item.message}
+                            </div>
                           </div>
                         </div>
                       </div>
