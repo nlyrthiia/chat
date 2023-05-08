@@ -171,7 +171,7 @@ export default function Layout({ ...props }) {
         }}
       ></div>
       <div className="flex-1 flex flex-col">
-        <div className="px-16 flex items-center h-[7rem]">
+        <div className="px-16 flex items-center h-[7rem] bg-[#1f2128]">
           <div>
             <img src="/img/search.svg" alt="search" />
           </div>

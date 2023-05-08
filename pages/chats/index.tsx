@@ -106,7 +106,7 @@ export default function Chats() {
   return (
     <Layout>
       <div
-        className="flex"
+        className="flex bg-[#1f2128]"
         style={{
           maxHeight: "calc(100vh - 7rem)",
         }}
@@ -254,7 +254,7 @@ export default function Chats() {
             }}
           ></div>
           {characterId && (
-            <div className="px-16 py-8 flex flex-col flex-1">
+            <div className="px-16 py-8 flex flex-col flex-1 min-w-[37.5rem]">
               <div className="font-semibold text-[2.5rem] text-white">
                 {
                   characterList.find(
