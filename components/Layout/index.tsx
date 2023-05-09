@@ -252,7 +252,7 @@ export default function Layout({ ...props }) {
                   Custom
                 </div> */}
                     <div
-                      className="ml-2 h-9 cursor-default px-5 rounded-lg text-sm font-semibold flex justify-center items-center"
+                      className="h-9 cursor-default px-5 rounded-lg text-sm font-semibold flex justify-center items-center"
                       style={{
                         background:
                           toastStep === 1 || toastStep === 2
@@ -262,6 +262,7 @@ export default function Layout({ ...props }) {
                           toastStep === 1 || toastStep === 2
                             ? "#fff"
                             : "#808191",
+                        marginLeft: toastStep === 1 ? "0.5rem" : "0",
                       }}
                     >
                       Template
