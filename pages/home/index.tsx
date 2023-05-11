@@ -95,15 +95,19 @@ export default function Home() {
                   alt="avatar"
                 />
               </div>
-              <div className="flex mt-6 overflow-hidden">
-                {item.tags.split(",").map((tag, index) => (
+              {/* <div className="flex mt-6 overflow-hidden"> */}
+              {/* {item.tags.split(",").map((tag, index) => (
                   <div className="mr-2 px-2 h-6 flex items-center  rounded-lg bg-[#243841] text-sm font-bold text-[#25D4D0]">
                     {tag}
                   </div>
-                ))}
-              </div>
+                ))} */}
+              {/* {item.tags} */}
+              {/* </div> */}
               <div className="mt-3 text-white text-lg font-medium">
                 {item.name}
+              </div>
+              <div className="mt-3 text-sm font-normal text-white w-52 overflow-hidden break-all whitespace-pre-wrap h-10">
+                {item.tags}
               </div>
               <div className="mt-4 flex items-center">
                 <img

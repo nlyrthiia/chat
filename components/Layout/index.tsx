@@ -489,12 +489,12 @@ export default function Layout({ ...props }) {
                     </div>
                   </div>
                   <div className="text-[#808191] mt-12 text-xs font-medium">
-                    tag Name
+                    Description
                   </div>
-                  <input
-                    className="mt-4 w-[17.1rem] outline-none w-full rounded-lg bg-[#2e303a] border border-[#E4E4E41A] px-6 h-14 py-4 text-white placeholder:text-[#808191] text-sm font-semibold"
+                  <textarea
                     value={tagName}
-                    placeholder="Its Tag"
+                    className="mt-4 px-6 h-[6rem] bg-[#373a43] py-4 outline-none border border-[#E4E4E41A] rounded-lg w-full resize-none text-sm font-medium placeholder:text-[#808191] text-white"
+                    placeholder="bot Descriptive information"
                     onChange={(e) => setTagName(e.target.value)}
                   />
                   <div className="mt-8 flex">
