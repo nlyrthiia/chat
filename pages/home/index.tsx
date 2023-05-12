@@ -106,7 +106,7 @@ export default function Home() {
               <div className="mt-3 text-white text-lg font-medium">
                 {item.name}
               </div>
-              <div className="mt-3 text-sm font-normal text-white w-52 overflow-hidden break-all whitespace-pre-wrap h-10">
+              <div className="mt-3 text-sm font-normal text-[#999999] w-52 overflow-hidden break-all whitespace-pre-wrap h-10">
                 {item.tags}
               </div>
               <div className="mt-4 flex items-center">

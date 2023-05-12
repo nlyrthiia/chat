@@ -282,13 +282,21 @@ export default function Layout({ ...props }) {
                 placeholder="Describe the soul as you wich, in detail."
               /> */}
                   {toastStep === 1 ? (
-                    <div>
+                    <div
+                      style={{
+                        background: showSelect ? "#373A43" : "#242731",
+                        borderRadius: showSelect ? "1.25rem" : "",
+                      }}
+                    >
                       <div
                         onClick={(e) => {
                           e.stopPropagation();
                           setShowSelect(!showSelect);
                         }}
-                        className="bg-[#232630] relative rounded-lg outline-none mt-4 w-full h-14 px-6 py-4 flex items-center justify-between"
+                        className="relative rounded-lg outline-none mt-4 w-full h-14 px-6 py-4 flex items-center justify-between"
+                        style={{
+                          background: showSelect ? "#373A43" : "#232630",
+                        }}
                       >
                         <div className="text-[#808191] text-sm font-semibold">
                           {selectTemplate || selectTemplate === 0 ? (
@@ -301,7 +309,12 @@ export default function Layout({ ...props }) {
                         </div>
                         <img src="/img/down.svg" alt="down" />
                         {showSelect ? (
-                          <div className="absolute rounded-lg px-6  bg-[#242731] left-0 right-0 top-0 bottom-0">
+                          <div
+                            className="absolute rounded-lg px-6  left-0 right-0 top-0 bottom-0 h-[17.5rem]"
+                            style={{
+                              background: showSelect ? "#373A43" : "#242731",
+                            }}
+                          >
                             {templateList.length ? (
                               templateList.map((item: any, index) => (
                                 <div
@@ -311,6 +324,11 @@ export default function Layout({ ...props }) {
                                     setToastStep(2);
                                   }}
                                   className="text-white cursor-default text-sm font-semibold h-14 bg-[#242731] flex justify-between items-center rounded-lg"
+                                  style={{
+                                    background: showSelect
+                                      ? "#373A43"
+                                      : "#242731",
+                                  }}
                                 >
                                   {item.title}
                                   {index === 0 && (
@@ -336,10 +354,10 @@ export default function Layout({ ...props }) {
                           </div>
                         ) : null}
                       </div>
-                      <div className="mt-20 flex justify-center">
+                      <div className="mt-20 flex justify-center bg-[#242731]">
                         <img src="/img/box.svg" alt="box" />
                       </div>
-                      <div className="mt-10 text-[#808191] text-sm font-medium flex justify-center">
+                      <div className="pt-10 text-[#808191] text-sm font-medium flex justify-center bg-[#242731]">
                         Choose a kind, then you can fulfill it
                       </div>
                     </div>
@@ -493,7 +511,7 @@ export default function Layout({ ...props }) {
                   </div>
                   <textarea
                     value={tagName}
-                    className="mt-4 px-6 h-[6rem] bg-[#373a43] py-4 outline-none border border-[#E4E4E41A] rounded-lg w-full resize-none text-sm font-medium placeholder:text-[#808191] text-white"
+                    className="mt-4 px-6 h-[6rem] bg-[#373a43] py-4 focus:border-[#25D4D0] outline-none border border-[#E4E4E41A] rounded-lg w-full resize-none text-sm font-medium placeholder:text-[#808191] text-white"
                     placeholder="bot Descriptive information"
                     onChange={(e) => setTagName(e.target.value)}
                   />
