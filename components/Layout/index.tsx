@@ -295,7 +295,7 @@ export default function Layout({ ...props }) {
                         }}
                         className="relative rounded-lg outline-none mt-4 w-full h-14 px-6 py-4 flex items-center justify-between"
                         style={{
-                          background: showSelect ? "#373A43" : "#232630",
+                          background: showSelect ? "#373A43" : "#E4E4E41A",
                         }}
                       >
                         <div className="text-[#808191] text-sm font-semibold">
