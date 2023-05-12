@@ -513,7 +513,7 @@ export default function Chats() {
                       setCharacterList(_characterList);
                     }
                   }}
-                  className="w-full px-6 h-10 bg-transparent border border-[#808191] outline-none rounded-2xl text-sm font-normal placeholder:#808191 text-white"
+                  className="w-full px-6 h-10 focus:border-[#25D4D0] bg-transparent border border-[#808191] outline-none rounded-2xl text-sm font-normal placeholder:#808191 text-white"
                   placeholder="Type Message"
                 />
               </div>

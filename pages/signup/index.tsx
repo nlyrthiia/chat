@@ -89,7 +89,7 @@ export default function Home() {
               </div>
               <input
                 type="text"
-                className="input w-full  mt-4 bg-[#2e303a] text-white text-sm font-semibold"
+                className="input w-full focus:border-[#25D4D0] mt-4 bg-[#2e303a] text-white text-sm font-semibold"
                 value={firstName}
                 onChange={(e) => setFirstName(e.target.value)}
               />
@@ -100,7 +100,7 @@ export default function Home() {
               </div>
               <input
                 type="text"
-                className="input w-full  mt-4 bg-[#2e303a] text-white text-sm font-semibold"
+                className="input w-full focus:border-[#25D4D0] mt-4 bg-[#2e303a] text-white text-sm font-semibold"
                 value={lastName}
                 onChange={(e) => setLastName(e.target.value)}
               />
@@ -111,7 +111,7 @@ export default function Home() {
           </div>
           <input
             type="text"
-            className="input w-full  mt-4 bg-[#2e303a] text-white text-sm font-semibold"
+            className="input w-full focus:border-[#25D4D0] mt-4 bg-[#2e303a] text-white text-sm font-semibold"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
@@ -120,13 +120,13 @@ export default function Home() {
           </div>
           <input
             type="password"
-            className="input w-full  mt-4 bg-[#2e303a] text-white text-sm font-semibold"
+            className="input w-full focus:border-[#25D4D0] mt-4 bg-[#2e303a] text-white text-sm font-semibold"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
           <input
             type="password"
-            className="input w-full  mt-4 bg-[#2e303a] text-white text-sm font-semibold"
+            className="input w-full focus:border-[#25D4D0] mt-4 bg-[#2e303a] text-white text-sm font-semibold"
             value={repassword}
             onChange={(e) => setRepassword(e.target.value)}
           />

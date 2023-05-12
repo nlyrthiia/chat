@@ -176,7 +176,7 @@ export default function Layout({ ...props }) {
             <img src="/img/search.svg" alt="search" />
           </div>
           <input
-            className="flex-1 mx-5 text-sm font-semibold placeholder:text-[#808191] text-white bg-transparent outline-none"
+            className="flex-1 mx-5 text-sm focus:border-[#25D4D0] font-semibold placeholder:text-[#808191] text-white bg-transparent outline-none"
             placeholder="Search Character"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
@@ -278,7 +278,7 @@ export default function Layout({ ...props }) {
                 Custom Prompt
               </div>
               <textarea
-                className="mt-4 px-6 h-[16rem] bg-[#373a43] py-4 outline-none border border-[#E4E4E41A] rounded-lg w-full resize-none text-sm font-medium placeholder:text-[#808191] text-white"
+                className="mt-4 px-6 h-[16rem] bg-[#373a43] focus:border-[#25D4D0] py-4 outline-none border border-[#E4E4E41A] rounded-lg w-full resize-none text-sm font-medium placeholder:text-[#808191] text-white"
                 placeholder="Describe the soul as you wich, in detail."
               /> */}
                   {toastStep === 1 ? (
@@ -377,7 +377,7 @@ export default function Layout({ ...props }) {
                                     {parseKey(item)}
                                   </div>
                                   <textarea
-                                    className="mt-4 px-6 h-[6rem] bg-[#373a43] py-4 outline-none border border-[#E4E4E41A] rounded-lg w-full resize-none text-sm font-medium placeholder:text-[#808191] text-white"
+                                    className="mt-4 px-6 h-[6rem] bg-[#373a43] focus:border-[#25D4D0] py-4 outline-none border border-[#E4E4E41A] rounded-lg w-full resize-none text-sm font-medium placeholder:text-[#808191] text-white"
                                     value={templateInfo.defaultValue[item]}
                                     onChange={(e) => {
                                       const value = e.target.value;
@@ -438,7 +438,7 @@ export default function Layout({ ...props }) {
                     Its Name
                   </div>
                   <input
-                    className="mt-4 w-[17.1rem] outline-none  rounded-lg bg-[#2e303a] border border-[#E4E4E41A] px-6 h-14 py-4 text-white placeholder:text-[#808191] text-sm font-semibold"
+                    className="mt-4 w-[17.1rem] outline-none focus:border-[#25D4D0] rounded-lg bg-[#2e303a] border border-[#E4E4E41A] px-6 h-14 py-4 text-white placeholder:text-[#808191] text-sm font-semibold"
                     value={name}
                     placeholder="How would you call it？"
                     onChange={(e) => setName(e.target.value)}

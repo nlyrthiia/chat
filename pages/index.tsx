@@ -58,7 +58,7 @@ export default function Home() {
           <div className="mt-11 text-[#808191] text-xs font-medium">Email</div>
           <input
             type="text"
-            className="input w-full  mt-4 bg-[#2e303a] text-white text-sm font-semibold"
+            className="input w-full focus:border-[#25D4D0] mt-4 bg-[#2e303a] text-white text-sm font-semibold"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
@@ -67,7 +67,7 @@ export default function Home() {
           </div>
           <input
             type="password"
-            className="input w-full  mt-4 bg-[#2e303a] text-white text-sm font-semibold"
+            className="input w-full focus:border-[#25D4D0] mt-4 bg-[#2e303a] text-white text-sm font-semibold"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
